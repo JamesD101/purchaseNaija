@@ -1,0 +1,5 @@
+{
+  "databaseConnectionString": "mongodb://localhost:27017/purchaseNaija",
+  "secret":"secret",
+  "tokenExpiration":"24h"
+}
