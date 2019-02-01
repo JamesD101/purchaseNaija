@@ -12,7 +12,7 @@ const router = express.Router();
 
 var user = require('./routes/customer')(router);
 var admin = require('./routes/admin')(router);
-var serviceProvider = require('./routes/servieProvider')(router);
+var serviceProvider = require('./routes/serviceProvider')(router);
 
 // var userRoutes = require('./routes/user')(router);
 // var ejsMate = require('ejs-mate');

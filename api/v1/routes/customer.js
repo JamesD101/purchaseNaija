@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 module.exports = function(router){
 
     // register api
-    router.post('/api/v1/user/signup', function (req, res) {
+    router.post('/user/signup', function (req, res) {
         if (!req.body.email) {
             res.json({success: false, message: 'Email is required'});
         } else {
@@ -78,7 +78,7 @@ module.exports = function(router){
 
 
     // logging api functionality
-    router.post('/api/v1/user/login', function(req,res){
+    router.post('/user/login', function(req,res){
         if (!req.body.email){
             res.json({ success: false, message: 'Email must be provided'});
         } else {
@@ -108,6 +108,71 @@ module.exports = function(router){
         }
     });
 
+    //Customer update information functionality
+
+    router.put('/user/update/:id', function (req, res) {
+        if (!req.body.email) {
+            res.json({success: false, message: 'Email is required'});
+        } else {
+            if (!req.body.password) {
+                res.json({success: false, message: 'Password is required'});
+            } else {
+                if (!req.body.firstname) {
+                    res.json({success: false, message: 'First name is required'});
+                } else {
+                    if (!req.body.lastname) {
+                        res.json({success: false, message: 'Last name is required'});
+                    } else {
+                        if (!req.body.billingAddress1) {
+                            res.json({success: false, message: 'Billing address must be provided'});
+                        } else {
+                            if (!req.body.phoneNumber) {
+                                res.json({success: false, message: 'Phone number is required'});
+                            }
+                            else {
+                                User.findByIdAndUpdate(req.params.id, {
+                                    email: req.body.email,
+                                    password: req.body.password,
+                                    firstname: req.body.firstname,
+                                    lastname: req.body.lastname,
+                                    billingAddress1: req.body.billingAddress1,
+
+                                    // I am not sure if users would be updating all information so I didn't add this
+
+                                    // billingAddress2: req.body.billingAddress2,
+
+                                    phoneNumber: req.body.phoneNumber
+
+                                }, function (err) {
+                                    if (err) {
+                                        res.json({success: false, message: 'User Information could not be updated'});
+                                    } else {
+                                        res.json({success: true, message: 'User Information Updated'});
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    //API to get a particular user
+
+    router.get('/user/:id', function (req, res) {
+        User.findOne({ id: req.params.id}, function (err, user) {
+            if (err) {
+                res.json({success: false, message: err});
+            } else {
+                if (!user) {
+                    res.json({success: false, message: 'User was not found'});
+                } else {
+                    res.json({ success: false, user: user});
+                }
+            }
+        }) ;
+    });
 
     return router;
 };
