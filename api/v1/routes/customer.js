@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
+const Products = require('../models/products');
 const config = require('../config/secret');
 const jwt = require('jsonwebtoken');
 
@@ -156,6 +157,111 @@ module.exports = function(router){
                 }
             }
         }
+    });
+
+    // searching for products based on category
+    router.get('/products/search/:productCategory', function (req,res) {
+        Products.find({ productCategory: req.params.productCategory }, function (err, products) {
+            if(err){
+                res.json({ success: false, message: err });
+            } else {
+                if (!products) {
+                    res.json({success: false, message: 'No product was found'});
+                } else {
+                    if (products.length == 0) {
+                        res.json({success: false, message: 'No product was found'});
+                    } else {
+                        res.json({success: true, listOfProductCategory: products});
+                    }
+
+                }
+            }
+        });
+    });
+
+// searching for service provider based on category and date
+    router.get('/products/search/:productCategory?/:date?', function (req,res) {
+        Products.find({ productCategory: req.query.productCategory, date: req.query.date }, function (err, products) {
+            if(err){
+                res.json({ success: false, message: err });
+            } else {
+                if (!products) {
+                    res.json({success: false, message: 'No product was found'});
+                } else {
+                    if (products.length == 0) {
+                        res.json({success: false, message: 'No product was found'});
+                    } else {
+                        res.json({success: true, listOfProductCategory: products});
+                    }
+
+                }
+            }
+        });
+    });
+
+    //get all products
+    router.get('/products', function (req,res) {
+       Products.find({}, function (err, products) {
+           if (err) {
+               res.json({success: false, message: err});
+           } else {
+               if (!products) {
+                   res.json({success: false, message: 'No product was found'});
+               } else {
+                   if (products.length == 0) {
+                       res.json({success: false, message: 'No product was found'});
+                   } else {
+                       res.json({success: true, listOfProductCategory: products});
+                   }
+
+               }
+           }
+
+       })
+    });
+
+    //Get a particular product by ID
+
+    router.get('/products/:id', function (req,res) {
+        Products.find({ _id: req.params.id}, function (err, products) {
+            if (err) {
+                res.json({success: false, message: err});
+            } else {
+                if (!products) {
+                    res.json({success: false, message: 'No product was found'});
+                } else {
+                    if (products.length == 0) {
+                        res.json({success: false, message: 'No product was found'});
+                    } else {
+                        res.json({success: true, listOfProductCategory: products});
+                    }
+
+                }
+            }
+        })
+    });
+
+    //Get a particular product by productName
+    router.get('/product/search/:name?', function (req,res) {
+        var pname = req.query.name;
+        Products.find({name: pname}, function (err, products) {
+            if (err) {
+                res.json({success: false, message: err});
+            } else {
+                if (!products) {
+                    res.json({success: false, message: 'No product was found'});
+                }
+                else {
+                    if (products.length == 0) {
+                        res.json({success: false, message: 'No product was found'});
+                    }
+                    else {
+                        res.json({success: true, listOfProductCategory: products});
+                    }
+
+                }
+            }
+        })
     });
 
     //API to get a particular user

@@ -206,6 +206,7 @@ module.exports = function(router){
                            res.json({success: false, message:'Product Category is required'});
                        } else {
 
+/*
                            var imagePath = '';
 
                            upload(req, res, function (err) {
@@ -213,8 +214,9 @@ module.exports = function(router){
                                    // An error occurred when uploading
                                    console.log(err);
                                    return res.status(422).send("an Error occured");
-                               }
-                               imagePath = req.file.filename;
+                               }*/
+                               // imagePath = req.file.filename;
+
 
                                let product = new Products({
                                    name: req.body.name,
@@ -229,12 +231,12 @@ module.exports = function(router){
                                });
                                product.save(function (err) {
                                    if (err) {
-                                       res.json({success: false, message: 'An error occurred'});
+                                       res.json({success: false, message: 'An error occurred', error: err});
                                    } else {
                                        res.json({success: true, message: 'Product has been created'});
                                    }
                                });
-                           });
+                           // });
                        }
 
                    }
@@ -265,13 +267,13 @@ module.exports = function(router){
 
                             var imagePath = '';
 
-                            upload(req, res, function (err) {
+                            /*upload(req, res, function (err) {
                                 if (err) {
                                     // An error occurred when uploading
                                     console.log(err);
                                     return res.status(422).send("an Error occured");
                                 }
-                                imagePath = req.file.filename;
+                                imagePath = req.file.filename;*/
 
                                 Products.findByIdAndUpdate(req.params.id, {
                                     name: req.body.name,
@@ -290,7 +292,7 @@ module.exports = function(router){
                                         res.json({success: true, message: 'Product has been updated'});
                                     }
                                 });
-                            });
+                            // });
                         }
 
                     }

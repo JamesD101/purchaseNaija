@@ -176,7 +176,7 @@ module.exports = function(router){
 
     //Create Products
 
-    router.post('/serviceProvider/products', function (req, res) {
+    /*router.post('/serviceProvider/products', function (req, res) {
         if (!req.body.name) {
             res.json({success: false, message:'Product Name is required'});
         } else {
@@ -284,7 +284,7 @@ module.exports = function(router){
                 }
             }
         }
-    });
+    });*/
 
     //Delete product
     router.delete('/serviceProvider/products/:id', function (req,res) {
